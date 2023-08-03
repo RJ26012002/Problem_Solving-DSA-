@@ -1,49 +1,29 @@
 class Solution {
-public:
+    private:
+    void solve(string digits,vector<string> &ans,string output, int index,string str[]){
+        if(index >= digits.length()){
+            ans.push_back(output);
+            return;
+        }
+
+        int number = digits[index] - '0';
+        string value = str[number];
+        for(int i=0;i<value.length();i++){
+            output.push_back(value[i]);
+            solve(digits,ans,output,index+1,str);
+            output.pop_back();
+        }
+    }
    
-   bool checkParen(char &s,stack<char> &st){
-       if(st.empty()){
-           return false;
-       }
-       if(s == ']' && st.top() == '[' ){
-           st.pop();
-           return true;
-       }
-       if(s == '}' && st.top() == '{'){
-           st.pop();
-           return true;
-       }
-       if(s== ')' && st.top() == '('){
-           st.pop();
-           return true;
-       }
-       return false;
-   }
-    bool isValid(string s) {
-        stack<char> st;
-        if(s.length() ==1){
-            return false;
-        }
-        if(s.length()==0){
-            return true;
-        }
-        for(int i =0;i<s.length();i++){
-            if(s[i]=='(' || s[i]=='{' || s[i]== '[' ){
-                st.push(s[i]);
-            }
-            else{
-                if(checkParen(s[i],st)==0){
-                    return false;
-                }
-            }
-        }
-        if(!st.empty()){
-            return false;
-        }
-        return true;
-
-
-       
-        
+public:
+    vector<string> letterCombinations(string digits) {
+      vector<string> ans;
+      if(digits.length() == 0)
+      return ans;
+      string output;
+      int index = 0;
+      string str[11]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz",""};
+      solve(digits,ans,output,index,str);
+    return ans;
     }
 };
