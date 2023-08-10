@@ -12,48 +12,21 @@ using namespace std;
 
 class Solution{
     public:
-    void heapify(vector<int> &arr,int size, int index ){
-        while(index<=size){
-            int left = index*2;
-            int right = index*2 + 1;
-            int greatest = index;
-            if(left<=size && arr[left]>arr[greatest]){
-                greatest = left;
-            }
-            if(right<=size && arr[right]>arr[greatest]){
-                greatest = right;
-            }
-            if(greatest != index){
-                swap(arr[greatest],arr[index]);
-                index=greatest;
-            }
-            else{
-                break;
-            }
-        }
-    }
     vector<int> mergeHeaps(vector<int> &a, vector<int> &b, int n, int m) {
         // your code here
-        vector<int> merge;
-        merge.push_back(-1);
+        priority_queue<int> q;
         for(auto i:a){
-            merge.push_back(i);
+            q.push(i);
         }
         for(auto i:b){
-            merge.push_back(i);
+            q.push(i);
         }
-        int size = merge.size()-1;
-        
-        for(int i =size/2;i>=1;i--){
-            heapify(merge,size,i);
-        }        
         vector<int> ans;
-        for(int i =1;i<merge.size();i++){
-            ans.push_back(merge[i]);
-            // cout<<merge[i]<<" ";
+        while(!q.empty()){
+            ans.push_back(q.top());
+            q.pop();
         }
         return ans;
-        
     }
 };
 
